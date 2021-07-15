@@ -1,0 +1,25 @@
+{
+  "name": "Ice-Cream-Inventory",
+  "version": "1.0.0",
+  "description": "I scream, you scream, we all scream for ice cream.",
+  "main": "App.js",
+  "scripts": {
+    "start": "nodemon start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JacobSchneck/Ice-Cream-Inventory.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JacobSchneck/Ice-Cream-Inventory/issues"
+  },
+  "homepage": "https://github.com/JacobSchneck/Ice-Cream-Inventory#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.12"
+  }
+}

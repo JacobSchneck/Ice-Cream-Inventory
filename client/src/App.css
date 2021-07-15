@@ -1,0 +1,14 @@
+.App {
+	display: grid;
+	justify-content: center;
+	/* background-color: rgb(21, 133, 133); */
+}
+
+.header {
+	text-align: center;
+}
+
+.ice-cream-form {
+	display: grid;
+	justify-content: center;
+}
