@@ -37,8 +37,10 @@ router.get('/id/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	console.log(req.body);
-	// res.send("New icecream added");
+	const icecream = req.body;
+	console.log(icecream);
+	icecreams.push(icecream);
+	res.send("ice cream added");
 });
 
 

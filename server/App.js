@@ -3,7 +3,9 @@ const express = require('express');
 const app = express();
 const PORT = 5000;
 
-// API STUFF
+// Middleware
+app.use(express.json());
+
 const icecream = require('./Icecream');
 app.use('/', icecream);
 
