@@ -12,3 +12,9 @@
 	display: grid;
 	justify-content: center;
 }
+
+.lists {
+	display: grid;
+	grid-template-columns: auto auto;
+	justify-content: center;
+}

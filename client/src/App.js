@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+import Submit from "./Components/Submit/Submit";
+import Request from "./Components/Request/Request";
+
 import "./App.css"
 
 const App = () => {
-  const [flavor, setFlavor] = useState('');
-  const [brand, setBrand] = useState('');
   const [stock, setStock] = useState([]);
 
-  const submitIceCream = (event) => {
-    event.preventDefault();
-    const icecream = {
-      flavor: flavor,
-      brand: brand,
-    };
-    setStock([...stock, icecream]);
-  }
+  useEffect( () => {
+    axios.get('http://localhost:5000')
+      .then( (res) => {
+        let data = res.data;
+        data = data.map( el => {
+          return { flavor: el.flavor, brand: el.brand }
+        });
+        setStock(data);
+      })
+      .catch( (error) => {
+        console.log(error);
+      });
+  }, []);
+
+  // console.log(stock);
 
   return (
     <div className="App">
@@ -22,25 +32,21 @@ const App = () => {
           Ice Cream Form
         </h1>
       </header>
-      <form className="ice-cream-form">
+      <div className="lists">
         <div>
-          <input type="text" placeholder="flavor" onChange={(event) => setFlavor(event.target.value)} />
+          <h3 className="header"> 
+            {"Submit to Inventory"}
+          </h3>
+          <Submit stock={stock} setStock={setStock} />
         </div>
         <div>
-          <input type="text" placeholder="brand" onChange={(event) => setBrand(event.target.value)} />
+          <h3 className="header">
+            Request from Inventory
+          </h3>
+          <Request stock={stock} />
         </div>
-        <input type="submit" value="submit" onClick={(event) => submitIceCream(event)}/>
-      </form>
-      <ol>
-        { stock.map( ic => {
-          return (
-            <li>
-              {`${ic.flavor} - ${ic.brand}`}
-            </li>
-          );
-        }) }
-      </ol>
-    </div>
+      </div>
+  </div>
   )
 }
 
