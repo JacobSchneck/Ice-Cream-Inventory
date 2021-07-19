@@ -1,0 +1,15 @@
+.list {
+	margin: 10px;
+}
+
+.delete-button {
+	float: right;
+	margin-right: 5px;
+	margin-left: 10px;
+}
+
+.edit-button {
+	float: right;
+	margin-right: 5px;
+	margin-left: 10px;
+}
