@@ -1,5 +1,7 @@
-import React, { useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
+
+import Items from '../Items/Items';
 
 import "./Submit.css";
 
@@ -9,9 +11,13 @@ const Submit = ({ stock, setStock }) => {
 
   const submitIceCream = (event) => {
     event.preventDefault();
+	 const id = Math.max(...stock.map( el => el.id)) + 1;
+	//  console.log9()
+	 console.log(id);
     const icecream = {
-      flavor: flavor,
-      brand: brand,
+		id: id,
+		flavor: flavor,
+		brand: brand,
     };
 
     axios.post('http://localhost:5000', icecream)
@@ -35,15 +41,7 @@ const Submit = ({ stock, setStock }) => {
 			</div>
 			<input type="submit" value="SUBMIT" onClick={(event) => submitIceCream(event)}/>
 			</form>
-			<ol>
-			{ stock.map( ic => {
-				return (
-					<li>
-					{`${ic.flavor} - ${ic.brand}`}
-					</li>
-				);
-			}) }
-			</ol>
+			< Items items={stock} stock={ stock } setStock={ setStock } />
 		</div>
 	);
 }

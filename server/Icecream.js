@@ -5,22 +5,22 @@ const router = express.Router();
 // mock data
 const  icecreams = [
 	{
-		// id: 1,
+		id: 1,
 		flavor: "Chocolate",
 		brand: "NadaMoo",
 	},
 	{
-		// id: 2,
+		id: 2,
 		flavor: "Strawberry",
 		brand: "Hudsonville",
 	},
 	{
-		// id: 3,
+		id: 3,
 		flavor: "Pistacio",
 		brand: "Haagen-Dazs",
 	},
 	{
-		// id: 4,
+		id: 4,
 		flavor: "Chunky Monkey",
 		brand: "Ben and Jerry's",
 	}
@@ -37,6 +37,12 @@ router.get('/flavor/:flavor', (req, res) => {
 	res.json(icecreams.filter( ic => ic.flavor === flavor ));
 });
 
+router.get('/id/:id', (req, res) => {
+	const { id } = req.params;
+	res.json(icecreams.filter( ic => ic.id === parseInt(id) ));
+});
+
+
 router.get('/brand/:brand', (req, res) => {
 	const { brand } = req.params;
 	res.json(icecreams.filter( ic => ic.brand === brand ));
@@ -47,6 +53,16 @@ router.post('/', (req, res) => {
 	console.log(icecream);
 	icecreams.push(icecream);
 	res.send(icecream);
+});
+
+router.delete('/id/:id', (req, res) => {
+	const { id } = req.params;
+	const index = icecreams.findIndex( ic => ic.id === parseInt(id));
+	if (index === -1) {
+		res.send("error");
+	} else {
+		res.send(icecreams.splice(index, 1));
+	}
 });
 
 

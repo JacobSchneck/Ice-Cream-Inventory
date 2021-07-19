@@ -14,8 +14,9 @@ const App = () => {
       .then( (res) => {
         let data = res.data;
         data = data.map( el => {
-          return { flavor: el.flavor, brand: el.brand }
+          return { id: el.id, flavor: el.flavor, brand: el.brand }
         });
+        console.log(data);
         setStock(data);
       })
       .catch( (error) => {

@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 
+import Items from "../Items/Items";
+
 import './Request.css';
 
-const Request = ({ stock }) => {
+const Request = ({ stock, setStock }) => {
 	const [flavor, setFlavor] = useState('');
 	const [brand, setBrand] = useState('');
 	const [matches, setMatches] = useState([]);
@@ -27,15 +29,7 @@ const Request = ({ stock }) => {
 			</div>
 			<input type="submit" value="REQUEST" onClick={(event) => getIceCream(event)} />
 			</form>
-			<ol>
-			{ matches.map( ic => {
-				return (
-					<li>
-					{`${ic.flavor} - ${ic.brand}`}
-					</li>
-				);
-			}) }
-			</ol>
+			<Items items={matches} stock={stock} setStock={setStock} />
 		</div>
   );
 }
