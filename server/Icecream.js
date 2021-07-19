@@ -59,10 +59,32 @@ router.delete('/id/:id', (req, res) => {
 	const { id } = req.params;
 	const index = icecreams.findIndex( ic => ic.id === parseInt(id));
 	if (index === -1) {
-		res.send("error");
+		res.send("error, icecream not found");
 	} else {
 		res.send(icecreams.splice(index, 1));
 	}
+});
+
+router.put('/id/:id', (req, res) => {
+	const { id, flavor, brand} = req.body; 
+
+	const index = icecreams.findIndex( ic => ic.id === parseInt(id));
+	if (index === -1) {
+		res.send("error, icecream not found");
+	} else {
+		icecreams[index] = {
+			id: id,
+			flavor: flavor,
+			brand: brand,
+		};
+		res.send(icecreams[index]);
+	}
+	// res.send(`${id}-${flavor}-${brand}-${index}`);
+
+
+	// const { id, flavor, brand} = req.body; 
+	// res.send(`${id}-${flavor}-${brand}`)
+	// // res.send("put request recieved");
 });
 
 
