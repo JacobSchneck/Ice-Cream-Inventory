@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import Items from "../Items/Items";
@@ -8,13 +8,19 @@ import './Request.css';
 const Request = ({ stock, setStock }) => {
 	const [flavor, setFlavor] = useState('');
 	const [brand, setBrand] = useState('');
-	const [matches, setMatches] = useState([]);
+	const [matches, setMatches] = useState(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
+
+	// stock.forEach( s => {
+	console.log("Request stock", stock);
+	// });
+
+	useEffect( () => {
+		setMatches(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
+	}, [stock]);
 
 	const getIceCream = (event) => {
 		event.preventDefault();
 		console.log(stock);
-		const arr = stock.filter( ic => ic.flavor === "Chocolate" && ic.brand === "NadaMoo");
-		console.log(arr);
 		setMatches(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
 	}
 

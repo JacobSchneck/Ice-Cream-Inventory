@@ -41,7 +41,7 @@ const Submit = ({ stock, setStock }) => {
 			</div>
 			<input type="submit" value="SUBMIT" onClick={(event) => submitIceCream(event)}/>
 			</form>
-			< Items items={stock} stock={ stock } setStock={ setStock } />
+			< Items items={ stock } stock={stock} setStock={ setStock } />
 		</div>
 	);
 }

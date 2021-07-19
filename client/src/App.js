@@ -44,7 +44,7 @@ const App = () => {
           <h3 className="header">
             Request from Inventory
           </h3>
-          <Request stock={stock} />
+          <Request stock={stock} setStock={setStock} />
         </div>
       </div>
   </div>

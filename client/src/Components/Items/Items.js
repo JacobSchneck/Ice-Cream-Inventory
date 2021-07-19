@@ -7,7 +7,7 @@ const Items = ({ items, stock, setStock }) => {
 		console.log(id);
 		axios.delete(`http://localhost:5000/id/${id}`)
 		.then( res => {
-			const index = items.findIndex( ic => ic.id === id);
+			const index = stock.findIndex( ic => ic.id === id);
 			if (index === -1) {
 				console.log("error");
 			} else {
