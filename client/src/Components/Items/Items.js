@@ -5,21 +5,6 @@ import axios from 'axios';
 import "./Items.css";
 
 const Items = ({ items, stock, setStock }) => {
-// 	let subtitle;
-//   const [modalIsOpen, setIsOpen] = React.useState(false);
-
-//   function openModal() {
-//     setIsOpen(true);
-//   }
-
-//   function afterOpenModal() {
-//     // references are now sync'd and can be accessed.
-//     subtitle.style.color = '#f00';
-//   }
-
-//   function closeModal() {
-//     setIsOpen(false);
-//   }
 
 	const [show, setShow] = useState(false);
 	const [flavor, setFlavor] = useState('');
@@ -60,7 +45,6 @@ const Items = ({ items, stock, setStock }) => {
 			brand: brand,
 		};
 
-		console.log(replacement);
 
 		event.preventDefault();
 		axios.put(`http://localhost:5000/id/${id}`, replacement)
@@ -80,17 +64,16 @@ const Items = ({ items, stock, setStock }) => {
 
 	return (
 		<>
-
 			<ol >
-			{ items.map( ic => {
-				return (
-					<li className="list">
-					{`${ic.flavor} - ${ic.brand}`}
-					<button className="delete-button" onClick={ () => handleDelete(ic.id)} > Delete </button>
-					<button className="edit-button" onClick={ () => handleShow(ic.id)}> Edit </button>
-					</li>
-				);
-			}) }
+				{ items.map( ic => {
+					return (
+						<li className="list">
+							{`${ic.flavor} - ${ic.brand}`}
+							<button className="delete-button" onClick={ () => handleDelete(ic.id)} > Delete </button>
+							<button className="edit-button" onClick={ () => handleShow(ic.id)}> Edit </button>
+						</li>
+					);
+				}) }
 			</ol>
 
 			<Modal

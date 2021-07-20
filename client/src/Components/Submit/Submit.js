@@ -10,24 +10,27 @@ const Submit = ({ stock, setStock }) => {
   const [brand, setBrand] = useState('');
 
   const submitIceCream = (event) => {
-    event.preventDefault();
-	 const id = Math.max(...stock.map( el => el.id)) + 1;
-	//  console.log9()
-	 console.log(id);
-    const icecream = {
+		event.preventDefault();
+		const id = Math.max(...stock.map( el => el.id)) + 1;
+		const icecream = {
 		id: id,
 		flavor: flavor,
 		brand: brand,
-    };
+		};
 
-    axios.post('http://localhost:5000', icecream)
-      .then( (res) => {
-        console.log(res.data);
-        setStock([...stock, res.data]);
-      })
-      .catch( (error) => {
-        console.log(error);
-      });
+		const newStock = stock.slice().push(icecream);
+		setStock(newStock);
+
+
+		axios.post('http://localhost:5000', icecream)
+			.then( (res) => {
+				console.log(res);
+			})
+			.catch( (error) => {
+				console.log(error);
+			});
+	
+		console.log(stock);
 	}
 
 	return (

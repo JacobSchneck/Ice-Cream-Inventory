@@ -103,6 +103,7 @@ router.post('/', (req, res) => {
 		}
 		console.log(`${icecream} inserted into database`);
 	})
+	res.send("Post completed");
 });
 
 router.delete('/id/:id', (req, res) => {
@@ -114,21 +115,24 @@ router.delete('/id/:id', (req, res) => {
 		}
 		console.log(`${result} removed from table`);
 	});
+	res.send("Delete completed");
 });
 
 router.put('/id/:id', (req, res) => {
 	const { id, flavor, brand} = req.body; 
+	console.log(req.body);
 	const sql = `UPDATE icecream
 					 SET 
 					 	flavor = ?,
 						brand = ?
 					WHERE id = ?`;
-	db.run(sql, [id, flavor, brand], (err, result) => {
+	db.run(sql, [flavor, brand, id], (err, result) => {
 		if (err) {
 			return console.error(err.message);
 		}
 		console.log(`updated table`);
 	});
+	res.send("Put completed");
 });
 
 // db.close( (err) => {

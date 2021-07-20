@@ -10,8 +10,6 @@ const Request = ({ stock, setStock }) => {
 	const [brand, setBrand] = useState('');
 	const [matches, setMatches] = useState(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
 
-	// console.log("Request stock", stock);
-
 	useEffect( () => {
 		setMatches(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
 	}, []);
