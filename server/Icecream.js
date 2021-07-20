@@ -26,47 +26,109 @@ const  icecreams = [
 	}
 ]
 	
+// database
+const sqlite3 = require('sqlite3').verbose();
+let db = new sqlite3.Database('./db/icecream.db', (err) => {
+	if (err) {
+		console.error(err.message);
+	}
+	console.log('Connected to icecream database');
+});
+
+db.serialize( () => {
+	db.each('SELECT * FROM icecream', (err, row) => {
+		if (err) {
+			console.error(err.message);
+		}
+		console.log(row.id + '\t' + row.flavor + '\t' + row.brand);
+	});
+});
+
 
 // HTTP METHODS
 router.get('/', (req, res) => {
-	res.json(icecreams);
+	const sql = " SELECT * FROM icecream";
+	// const result = [];
+	db.all(sql, [], (err, result) => {
+		if (err) {
+			throw err;
+		}
+		res.json(result);
+	});
 });
 
 router.get('/flavor/:flavor', (req, res) => {
 	const { flavor } = req.params;
-	res.json(icecreams.filter( ic => ic.flavor === flavor ));
+	const sql = ` SELECT * FROM icecream WHERE flavor = ?`;
+	db.all(sql, [flavor], (err, result) => {
+		if (err) {
+			throw err;
+		}
+		res.json(result);
+	});
 });
 
 router.get('/id/:id', (req, res) => {
 	const { id } = req.params;
-	res.json(icecreams.filter( ic => ic.id === parseInt(id) ));
+	const sql = ` SELECT * FROM icecream WHERE id = ?`;
+	db.all(sql, [id], (err, result) => {
+		if (err) {
+			throw err;
+		}
+		res.json(result);
+	});
 });
-
 
 router.get('/brand/:brand', (req, res) => {
 	const { brand } = req.params;
-	res.json(icecreams.filter( ic => ic.brand === brand ));
+	const sql = ` SELECT * FROM icecream WHERE brand = ?`;
+	db.all(sql, [brand], (err, result) => {
+		if (err) {
+			throw err;
+		}
+		res.json(result);
+	});
 })
 
 router.post('/', (req, res) => {
 	const icecream = req.body;
-	console.log(icecream);
-	icecreams.push(icecream);
-	res.send(icecream);
+	const sql = `INSERT INTO icecream
+					 (id, flavor, brand)
+					 VALUES
+					 (?, ?, ?)`;
+
+	db.run(sql, [icecream.id, icecream.flavor, icecream.brand], (err) => {
+		if (err) {
+			throw err;
+		}
+		console.log(`${icecream} inserted into database`);
+	})
 });
 
 router.delete('/id/:id', (req, res) => {
 	const { id } = req.params;
-	const index = icecreams.findIndex( ic => ic.id === parseInt(id));
-	if (index === -1) {
-		res.send("error, icecream not found");
-	} else {
-		res.send(icecreams.splice(index, 1));
-	}
+	const sql = `DELETE FROM icecream WHERE id = ?`;
+	db.all(sql, [id], (err, result) => {
+		if (err) {
+			throw err;
+		}
+		console.log(`${result} removed from table`);
+	});
 });
 
 router.put('/id/:id', (req, res) => {
-	const { id, flavor, brand} = req.body; 
+	// const { id, flavor, brand} = req.body; 
+	// const sql = `UPDATE icecream
+	// 				 SET 
+	// 				 	flavor = ?,
+	// 					brand = ?
+	// 				WHERE id = ?`;
+	// db.run(sql, [id, flavor, brand], (err, result) => {
+	// 	if (err) {
+	// 		return console.error(err.message);
+	// 	}
+	// 	console.log(`updated table`);
+	// });
 
 	const index = icecreams.findIndex( ic => ic.id === parseInt(id));
 	if (index === -1) {
@@ -79,13 +141,13 @@ router.put('/id/:id', (req, res) => {
 		};
 		res.send(icecreams[index]);
 	}
-	// res.send(`${id}-${flavor}-${brand}-${index}`);
-
-
-	// const { id, flavor, brand} = req.body; 
-	// res.send(`${id}-${flavor}-${brand}`)
-	// // res.send("put request recieved");
 });
 
+// db.close( (err) => {
+// 	if (err){
+// 		console.error(err.message);
+// 	}
+// 	console.log('Close the database connection');
+// });
 
 module.exports = router;
