@@ -12,7 +12,7 @@ const Request = ({ stock, setStock }) => {
 
 	useEffect( () => {
 		setMatches(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
-	}, []);
+	}, [stock]);
 
 	const getIceCream = (event) => {
 		event.preventDefault();
