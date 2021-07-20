@@ -117,30 +117,18 @@ router.delete('/id/:id', (req, res) => {
 });
 
 router.put('/id/:id', (req, res) => {
-	// const { id, flavor, brand} = req.body; 
-	// const sql = `UPDATE icecream
-	// 				 SET 
-	// 				 	flavor = ?,
-	// 					brand = ?
-	// 				WHERE id = ?`;
-	// db.run(sql, [id, flavor, brand], (err, result) => {
-	// 	if (err) {
-	// 		return console.error(err.message);
-	// 	}
-	// 	console.log(`updated table`);
-	// });
-
-	const index = icecreams.findIndex( ic => ic.id === parseInt(id));
-	if (index === -1) {
-		res.send("error, icecream not found");
-	} else {
-		icecreams[index] = {
-			id: id,
-			flavor: flavor,
-			brand: brand,
-		};
-		res.send(icecreams[index]);
-	}
+	const { id, flavor, brand} = req.body; 
+	const sql = `UPDATE icecream
+					 SET 
+					 	flavor = ?,
+						brand = ?
+					WHERE id = ?`;
+	db.run(sql, [id, flavor, brand], (err, result) => {
+		if (err) {
+			return console.error(err.message);
+		}
+		console.log(`updated table`);
+	});
 });
 
 // db.close( (err) => {
