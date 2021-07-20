@@ -18,13 +18,13 @@ const Submit = ({ stock, setStock }) => {
 		brand: brand,
 		};
 
-		const newStock = stock.slice().push(icecream);
-		setStock(newStock);
 
 
 		axios.post('http://localhost:5000', icecream)
 			.then( (res) => {
 				console.log(res);
+				// const newStock = stock.slice().push(icecream);
+				setStock([...stock, icecream]);
 			})
 			.catch( (error) => {
 				console.log(error);

@@ -65,7 +65,7 @@ const Items = ({ items, stock, setStock }) => {
 	return (
 		<>
 			<ol >
-				{ items.map( ic => {
+				{ items.map( (ic) => {
 					return (
 						<li className="list">
 							{`${ic.flavor} - ${ic.brand}`}
