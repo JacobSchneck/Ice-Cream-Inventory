@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
@@ -14,7 +14,7 @@ const icecream = require('./Icecream');
 app.use('/', icecream);
 
 //
-app.listen(PORT, () => {
+module.exports = app.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}`);
 });
 

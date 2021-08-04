@@ -1,34 +1,12 @@
 const express = require('express');
-// const cors = require('cors');
 const router = express.Router();
 
-// mock data
-const  icecreams = [
-	{
-		id: 1,
-		flavor: "Chocolate",
-		brand: "NadaMoo",
-	},
-	{
-		id: 2,
-		flavor: "Strawberry",
-		brand: "Hudsonville",
-	},
-	{
-		id: 3,
-		flavor: "Pistacio",
-		brand: "Haagen-Dazs",
-	},
-	{
-		id: 4,
-		flavor: "Chunky Monkey",
-		brand: "Ben and Jerry's",
-	}
-]
-	
-// database
+//--------------------- OPEN DATA BASE --------------------------
+const args = process.argv;	
+const dataBasePath = args[2] === "tests/test.js" ? "./db/mock.db" : "./db/icecream.db";
+console.log("Database path: " + dataBasePath); // print to console
 const sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./db/icecream.db', (err) => {
+let db = new sqlite3.Database(dataBasePath, (err) => {
 	if (err) {
 		console.error(err.message);
 	}
@@ -45,10 +23,9 @@ db.serialize( () => {
 });
 
 
-// HTTP METHODS
+//--------------------- GET -------------------------------------
 router.get('/', (req, res) => {
 	const sql = " SELECT * FROM icecream";
-	// const result = [];
 	db.all(sql, [], (err, result) => {
 		if (err) {
 			throw err;
@@ -70,8 +47,8 @@ router.get('/flavor/:flavor', (req, res) => {
 
 router.get('/id/:id', (req, res) => {
 	const { id } = req.params;
-	const sql = ` SELECT * FROM icecream WHERE id = ?`;
-	db.all(sql, [id], (err, result) => {
+	const sql = ` SELECT * FROM icecream WHERE id = ${id}`;
+	db.all(sql, [], (err, result) => {
 		if (err) {
 			throw err;
 		}
@@ -90,6 +67,7 @@ router.get('/brand/:brand', (req, res) => {
 	});
 })
 
+//--------------------- POST-------------------------------------
 router.post('/', (req, res) => {
 	const icecream = req.body;
 	const sql = `INSERT INTO icecream
@@ -101,23 +79,24 @@ router.post('/', (req, res) => {
 		if (err) {
 			throw err;
 		}
-		console.log(`${icecream} inserted into database`);
 	})
-	res.send("Post completed");
+	res.json({message: `${JSON.stringify(icecream)} inserted`});
 });
 
+//--------------------- DELETE ----------------------------------
 router.delete('/id/:id', (req, res) => {
 	const { id } = req.params;
-	const sql = `DELETE FROM icecream WHERE id = ?`;
-	db.all(sql, [id], (err, result) => {
+	const sql = `DELETE FROM icecream WHERE id = ${id}`;
+	db.all(sql, [], (err, result) => {
 		if (err) {
 			throw err;
 		}
 		console.log(`${result} removed from table`);
 	});
-	res.send("Delete completed");
+	res.json({message: `Icecream with id = ${id} deleted`});
 });
 
+//--------------------- PUT -------------------------------------
 router.put('/id/:id', (req, res) => {
 	const { id, flavor, brand} = req.body; 
 	console.log(req.body);
@@ -134,12 +113,5 @@ router.put('/id/:id', (req, res) => {
 	});
 	res.send("Put completed");
 });
-
-// db.close( (err) => {
-// 	if (err){
-// 		console.error(err.message);
-// 	}
-// 	console.log('Close the database connection');
-// });
 
 module.exports = router;

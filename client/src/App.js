@@ -13,6 +13,9 @@ const App = () => {
     axios.get('http://localhost:5000')
       .then( (res) => {
         let data = res.data;
+        data = data.map( el => {
+          return { id: el.id, flavor: el.flavor, brand: el.brand }
+        });
         console.log(data);
         setStock(data);
       })
@@ -20,6 +23,7 @@ const App = () => {
         console.log(error);
       });
   }, []);
+
 
   return (
     <div className="App">
