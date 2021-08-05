@@ -11,10 +11,13 @@
 .ice-cream-form {
 	display: grid;
 	justify-content: center;
+	/* float: right; */
+	/* grid-template-columns: auto auto; */
+	/* margin-left: 25%; */
 }
 
 .lists {
 	display: grid;
-	grid-template-columns: auto auto;
-	justify-content: center;
+	grid-template-columns: repeat(2, minmax(0 , 1fr)); /* make cols equal in width*/
+	justify-content: center; 
 }
