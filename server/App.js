@@ -11,7 +11,7 @@ app.use(cors({
 }));
 
 const icecream = require('./Icecream');
-app.use('/', icecream);
+app.use('/', icecream); // load data to client   
 
 //
 module.exports = app.listen(PORT, () => {

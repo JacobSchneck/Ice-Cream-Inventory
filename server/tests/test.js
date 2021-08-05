@@ -23,7 +23,7 @@ describe('Integration Test for Back End Restful APIs', () => {
 			});
 		});
 
-	describe('GET id from /id/:id', () => {
+	describe('GET icecream from /id/:id', () => {
 		it('Should return Icecream matching id', (done) => {
 			request(app)
 				.get(`/id/${3}`)
@@ -40,7 +40,7 @@ describe('Integration Test for Back End Restful APIs', () => {
 		});
 	});
 
-	describe('GET id from /flavor/:flavor', () => {
+	describe('GET icecream from /flavor/:flavor', () => {
 		it('Should return Icecream matching flavor', (done) => {
 			request(app)
 				.get('/flavor/Pistacio')
@@ -57,7 +57,7 @@ describe('Integration Test for Back End Restful APIs', () => {
 		});
 	});
 	
-	describe('GET id from /brand/:brand', () => {
+	describe('GET icecream from /brand/:brand', () => {
 		it('Should return Icecream matching brand', (done) => {
 			request(app)
 				.get('/brand/Haagen-Dazs')
@@ -90,6 +90,39 @@ describe('Integration Test for Back End Restful APIs', () => {
 		});
 	});
 
+	describe("Put at id 5 -> {id: 5, flavor: 'Banana', brand: 'Edy\'s' to database", () => {
+		it('Should add peach icecream to the database', (done) => {
+			request(app)
+				.put(`/id/${5}`)
+				.set('Accept', 'application/json')
+				.send({id: 5, flavor: 'Banana', brand: 'Edy\'s'})
+				.expect(200)
+				.end((err, res) => {
+					if (err) return done();
+					const data = res.body.message;
+					assert(`Icecream with id = ${5} changed to Banana - Edy\'s` === data, "Put does not function properly");
+					return done();
+			});
+		});
+	});
+
+	describe('GET icecream from /id/:id', () => {
+		it('Should return Icecream matching id', (done) => {
+			request(app)
+				.get(`/id/${5}`)
+				.set('Accept', 'application/json')
+				.expect(200)
+				.end((err, res) => {
+					if (err) return done();
+					const data = res.body;
+					assert( JSON.stringify(data) === JSON.stringify([ 
+ 						{ id: 5, flavor: 'Banana', brand: 'Edy\'s'},
+					]), "GET id  does not function properly"); 
+					return done();
+			});
+		});
+	});
+
 	describe("DELETE mathcing id's from database", () => {
 		it('Should delete peach icecream', (done) => {
 			request(app)
@@ -104,7 +137,6 @@ describe('Integration Test for Back End Restful APIs', () => {
 			});
 		});
 	});
-
 });
 
 

@@ -91,7 +91,6 @@ router.delete('/id/:id', (req, res) => {
 		if (err) {
 			throw err;
 		}
-		console.log(`${result} removed from table`);
 	});
 	res.json({message: `Icecream with id = ${id} deleted`});
 });
@@ -99,7 +98,6 @@ router.delete('/id/:id', (req, res) => {
 //--------------------- PUT -------------------------------------
 router.put('/id/:id', (req, res) => {
 	const { id, flavor, brand} = req.body; 
-	console.log(req.body);
 	const sql = `UPDATE icecream
 					 SET 
 					 	flavor = ?,
@@ -109,9 +107,8 @@ router.put('/id/:id', (req, res) => {
 		if (err) {
 			return console.error(err.message);
 		}
-		console.log(`updated table`);
 	});
-	res.send("Put completed");
+	res.json({message: `Icecream with id = ${5} changed to ${flavor} - ${brand}`});
 });
 
 module.exports = router;
