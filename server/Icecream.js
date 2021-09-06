@@ -108,7 +108,7 @@ router.put('/id/:id', (req, res) => {
 			return console.error(err.message);
 		}
 	});
-	res.json({message: `Icecream with id = ${5} changed to ${flavor} - ${brand}`});
+	res.json({message: `Icecream with id = ${id} changed to ${flavor} - ${brand}`});
 });
 
 module.exports = router;
