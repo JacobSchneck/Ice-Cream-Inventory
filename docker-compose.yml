@@ -3,6 +3,8 @@ services:
   server:
     build: ./server
     command: npm start
+    volumes: 
+      - icecream-db:/server/db/
     ports:
       - "5000:5000"
   client:
@@ -13,6 +15,6 @@ services:
     # Load client container after server container loads only
     depends_on:
       - server
-# volumes:
-#   icecream-db:
+volumes:
+  icecream-db:
   
