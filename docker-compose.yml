@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  server:
+    build: ./server
+    command: npm start
+    ports:
+      - "5000:5000"
+  client:
+    build: ./client
+    command: npm start
+    ports: 
+      - "3000:3000"
+    # Load client container after server container loads only
+    depends_on:
+      - server
+# volumes:
+#   icecream-db:
+  
