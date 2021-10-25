@@ -4,14 +4,21 @@ import axios from 'axios';
 import Items from '../Items/Items';
 
 import "./Submit.css";
+import StockType from '../../Types/StockType';
 
-const Submit = ({ stock, setStock }) => {
-  const [flavor, setFlavor] = useState('');
-  const [brand, setBrand] = useState('');
+interface SubmitProps {
+	stock: StockType[],
+	setStock: (stock: StockType[]) => void,
+}
 
-  const submitIceCream = (event) => {
+const Submit: React.FC<SubmitProps> = ({ stock, setStock }) => {
+  const [flavor, setFlavor] = useState<string>('');
+  const [brand, setBrand] = useState<string>('');
+
+  // Any seems fine for event
+  const submitIceCream = (event: any) => {
 		event.preventDefault();
-		const id = Math.max(...stock.map( el => el.id)) + 1;
+		const id = Math.max(...stock.map( (el: StockType) => el.id)) + 1;
 		const icecream = {
 		id: id,
 		flavor: flavor,

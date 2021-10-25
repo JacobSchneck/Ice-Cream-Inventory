@@ -4,16 +4,18 @@ import axios from 'axios';
 import Submit from "./Components/Submit/Submit";
 import Request from "./Components/Request/Request";
 
+import StockType from './Types/StockType';
+
 import "./App.css"
 
 const App = () => {
-  const [stock, setStock] = useState([]);
+  const [stock, setStock] = useState<Array<StockType>>([]);
 
   useEffect( () => {
     axios.get('http://localhost:5000')
       .then( (res) => {
         let data = res.data;
-        data = data.map( el => {
+        data = data.map( (el: StockType) => {
           return { id: el.id, flavor: el.flavor, brand: el.brand }
         });
         console.log(data);

@@ -3,26 +3,33 @@ import Modal from 'react-modal';
 import axios from 'axios';
 
 import "./Items.css";
+import StockType from "../../Types/StockType";
 
-const Items = ({ items, stock, setStock }) => {
+interface ItemsProps {
+	items: StockType[],
+	stock: StockType[],
+	setStock: (stock: StockType[]) => void,
+}
 
-	const [show, setShow] = useState(false);
-	const [flavor, setFlavor] = useState('');
-	const [brand, setBrand] = useState('')
-	const [id, setId] = useState();
+const Items: React.FC<ItemsProps> = ({ items, stock, setStock }) => {
+
+	const [show, setShow] = useState<boolean>(false);
+	const [flavor, setFlavor] = useState<string>('');
+	const [brand, setBrand] = useState<string>('')
+	const [id, setId] = useState<number>(-1);
 
 	const handleClose = () => setShow(false);
-	const handleShow = (id) => {
+	const handleShow = (id: number) => {
 		setId(id);
 		setShow(true);
 	}
 
 
-	const handleDelete = (id) => {
+	const handleDelete = (id: number) => {
 		console.log(id);
 		axios.delete(`http://localhost:5000/id/${id}`)
 		.then( res => {
-			const index = stock.findIndex( ic => ic.id === id);
+			const index = stock.findIndex( (ic: StockType) => ic.id === id);
 			if (index === -1) {
 				console.log("error");
 			} else {
@@ -38,7 +45,7 @@ const Items = ({ items, stock, setStock }) => {
 
 	}
 
-	const sendEdit = (event) => {
+	const sendEdit = (event: any) => {
 		const replacement = {
 			id: id,
 			flavor: flavor,
@@ -49,7 +56,7 @@ const Items = ({ items, stock, setStock }) => {
 		event.preventDefault();
 		axios.put(`http://localhost:5000/id/${id}`, replacement)
 			.then( res => {
-				const index = stock.findIndex( ic => ic.id === id);
+				const index = stock.findIndex( (ic: StockType) => ic.id === id);
 				if (index === -1) {
 					console.log("error");
 				} else {
@@ -65,7 +72,7 @@ const Items = ({ items, stock, setStock }) => {
 	return (
 		<>
 			<ol >
-				{ items.map( (ic) => {
+				{ items.map( (ic: StockType) => {
 					return (
 						<li className="list">
 							{`${ic.flavor} - ${ic.brand}`}
