@@ -1,11 +1,15 @@
-const express = require('express');
+// const express = require('express');
+import * as express from "express";
+// import  sqlite3  from 'sqlite3';
+// sqlite3.verbose();
+const sqlite3 = require('sqlite3').verbose();
+
 const router = express.Router();
 
 //--------------------- OPEN DATA BASE --------------------------
 const args = process.argv;	
 const dataBasePath = args[2] === "tests/test.js" ? "./db/mock.db" : "./db/icecream.db";
 console.log("Database path: " + dataBasePath); // print to console
-const sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database(dataBasePath, (err) => {
 	if (err) {
 		console.error(err.message);

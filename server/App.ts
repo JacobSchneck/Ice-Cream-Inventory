@@ -1,5 +1,5 @@
 // Server Stuff
-const express = require('express');
+import * as express from "express";
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
