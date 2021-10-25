@@ -2,21 +2,27 @@ import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import Items from "../Items/Items";
+import StockType from '../../Types/StockType';
 
 import './Request.css';
 
-const Request = ({ stock, setStock }) => {
-	const [flavor, setFlavor] = useState('');
-	const [brand, setBrand] = useState('');
-	const [matches, setMatches] = useState(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
+interface RequestProps {
+	stock: StockType[],
+	setStock: (stock: StockType[]) => void,
+}
+
+const Request: React.FC<RequestProps> = ({ stock, setStock }) => {
+	const [flavor, setFlavor] = useState<string>('');
+	const [brand, setBrand] = useState<string>('');
+	const [matches, setMatches] = useState<Array<StockType>>(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
 
 	useEffect( () => {
-		setMatches(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
+		setMatches(stock.filter( (ic: StockType) => ic.flavor === flavor && ic.brand === brand ));
 	}, [stock]);
 
-	const getIceCream = (event) => {
+	const getIceCream = (event: any) => {
 		event.preventDefault();
-		console.log(stock);
+		// console.log(stock);
 		setMatches(stock.filter( ic => ic.flavor === flavor && ic.brand === brand ));
 	}
 
